@@ -5,6 +5,7 @@ import com.swetonyancelmo.monify.domain.users.UpdateUserDto;
 import com.swetonyancelmo.monify.domain.users.UserResponseDto;
 import com.swetonyancelmo.monify.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,7 +36,7 @@ public class UserController implements com.swetonyancelmo.monify.controller.docs
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<UserResponseDto> create(@RequestBody CreateUserDto dto) {
+    public ResponseEntity<UserResponseDto> create(@RequestBody @Valid CreateUserDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(dto));
     }
 
@@ -45,7 +46,7 @@ public class UserController implements com.swetonyancelmo.monify.controller.docs
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<UserResponseDto> update(@RequestBody UpdateUserDto dto, @PathVariable("uuid") UUID id) {
+    public ResponseEntity<UserResponseDto> update(@RequestBody @Valid UpdateUserDto dto, @PathVariable("uuid") UUID id) {
         return ResponseEntity.ok(userService.update(dto, id));
     }
 

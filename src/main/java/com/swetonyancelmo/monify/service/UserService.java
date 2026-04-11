@@ -7,7 +7,9 @@ import com.swetonyancelmo.monify.domain.users.UserResponseDto;
 import com.swetonyancelmo.monify.exception.EmailAlreadyExistsException;
 import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.UserRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,18 +31,22 @@ public class UserService {
 
     @Transactional
     public UserResponseDto create(CreateUserDto dto) {
-        if (userRepository.existsByEmail(dto.email())) {
-            throw new EmailAlreadyExistsException("Email já cadastrado");
+        try {
+            User user = new User();
+            user.setName(dto.name());
+            user.setEmail(dto.email());
+            user.setPassword(dto.password());
+
+            User userSaved = userRepository.save(user);
+
+            return new UserResponseDto(userSaved.getId(), userSaved.getName(), userSaved.getEmail());
+        } catch (DataIntegrityViolationException e) {
+            if (e.getCause() instanceof ConstraintViolationException) {
+                throw new EmailAlreadyExistsException("Email já cadastrado");
+            }
+            throw e;
         }
 
-        User user = new User();
-        user.setName(dto.name());
-        user.setEmail(dto.email());
-        user.setPassword(dto.password()); // * Futuramente será hasheada
-
-        User userSaved = userRepository.save(user);
-
-        return new UserResponseDto(userSaved.getId(), userSaved.getName(), userSaved.getEmail());
     }
 
     @Transactional
