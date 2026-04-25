@@ -5,6 +5,7 @@ import com.swetonyancelmo.monify.domain.categories.CategoryResponseDto;
 import com.swetonyancelmo.monify.domain.categories.CreateCategoryDto;
 import com.swetonyancelmo.monify.domain.categories.UpdateCategoryDto;
 import com.swetonyancelmo.monify.config.JWTUserData;
+import com.swetonyancelmo.monify.domain.users.User;
 import com.swetonyancelmo.monify.service.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +29,7 @@ public class CategoryController implements CategoryControllerDocs {
     @Autowired
     private CategoryService categoryService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -34,6 +38,7 @@ public class CategoryController implements CategoryControllerDocs {
         return ResponseEntity.ok(categoryService.findAllCategories());
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -44,22 +49,24 @@ public class CategoryController implements CategoryControllerDocs {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(data, userData.email()));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping(
-            value = "/{uuid}",
+            value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID uuid) {
-        return ResponseEntity.ok(categoryService.updateCategory(data, uuid));
+    public ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id, @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(categoryService.updateCategory(data, id, user.getId()));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(
             value = "/{uuid}"
     )
     @Override
-    public ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid) {
-        categoryService.deleteCategory(uuid);
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid, @AuthenticationPrincipal User user) {
+        categoryService.deleteCategory(uuid, user.getId());
         return ResponseEntity.noContent().build();
     }
 

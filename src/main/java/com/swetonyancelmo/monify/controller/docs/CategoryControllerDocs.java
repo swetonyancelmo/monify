@@ -4,6 +4,7 @@ import com.swetonyancelmo.monify.domain.categories.CategoryResponseDto;
 import com.swetonyancelmo.monify.domain.categories.CreateCategoryDto;
 import com.swetonyancelmo.monify.domain.categories.UpdateCategoryDto;
 import com.swetonyancelmo.monify.domain.dto.ErrorResponseDto;
+import com.swetonyancelmo.monify.domain.users.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,6 +14,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,7 +68,7 @@ public interface CategoryControllerDocs {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID uuid);
+    ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id, @AuthenticationPrincipal User user);
 
     @Operation(summary = "Delete a Category", description = "Delete a Category")
     @ApiResponses(value = {
@@ -83,5 +85,5 @@ public interface CategoryControllerDocs {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid);
+    ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid, @AuthenticationPrincipal User user);
 }

@@ -32,12 +32,12 @@ public class CategoryService {
 
     @Transactional
     public CategoryResponseDto createCategory(CreateCategoryDto dto, String userEmail) {
-        if (categoryRepository.existsByName(dto.name())) {
-            throw new BusinessException("Categoria com o nome " + dto.name() + " já existente");
-        }
-
         User userData = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com o email " + userEmail + " não encontrado"));
+
+        if (categoryRepository.existsByNameAndUserId(dto.name(), userData.getId())) {
+            throw new BusinessException("Você já possui uma categoria com o nome '" + dto.name() + "'");
+        }
 
         Category category = new Category();
         category.setName(dto.name());
@@ -46,12 +46,17 @@ public class CategoryService {
 
         Category categorySaved = categoryRepository.save(category);
 
-        return new CategoryResponseDto(categorySaved.getId(), categorySaved.getName(), categorySaved.getType(), categorySaved.getUser().getId());
+        return new CategoryResponseDto(
+                categorySaved.getId(),
+                categorySaved.getName(),
+                categorySaved.getType(),
+                categorySaved.getUser().getId()
+        );
     }
 
     @Transactional
-    public CategoryResponseDto updateCategory(UpdateCategoryDto dto, UUID id) {
-        Category category = categoryRepository.findById(id)
+    public CategoryResponseDto updateCategory(UpdateCategoryDto dto, UUID id, UUID userId) {
+        Category category = categoryRepository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada ou não existente com ID: "+ id));
 
         if (dto.name() != null && !dto.name().isEmpty()) {
@@ -68,8 +73,8 @@ public class CategoryService {
     }
 
     @Transactional
-    public void deleteCategory(UUID id) {
-        Category category = categoryRepository.findById(id)
+    public void deleteCategory(UUID id, UUID userId) {
+        Category category = categoryRepository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada ou não existente com ID: "+ id));
 
         categoryRepository.delete(category);
