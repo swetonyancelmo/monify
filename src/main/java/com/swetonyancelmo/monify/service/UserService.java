@@ -1,8 +1,8 @@
 package com.swetonyancelmo.monify.service;
 
-import com.swetonyancelmo.monify.domain.users.UpdateUserDto;
-import com.swetonyancelmo.monify.domain.users.User;
-import com.swetonyancelmo.monify.domain.users.UserResponseDto;
+import com.swetonyancelmo.monify.dto.request.UpdateUserDto;
+import com.swetonyancelmo.monify.domain.User;
+import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

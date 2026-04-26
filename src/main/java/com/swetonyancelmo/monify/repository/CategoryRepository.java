@@ -1,6 +1,6 @@
 package com.swetonyancelmo.monify.repository;
 
-import com.swetonyancelmo.monify.domain.categories.Category;
+import com.swetonyancelmo.monify.domain.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

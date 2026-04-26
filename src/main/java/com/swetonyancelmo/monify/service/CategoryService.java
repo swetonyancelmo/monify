@@ -1,10 +1,10 @@
 package com.swetonyancelmo.monify.service;
 
-import com.swetonyancelmo.monify.domain.categories.Category;
-import com.swetonyancelmo.monify.domain.categories.CategoryResponseDto;
-import com.swetonyancelmo.monify.domain.categories.CreateCategoryDto;
-import com.swetonyancelmo.monify.domain.categories.UpdateCategoryDto;
-import com.swetonyancelmo.monify.domain.users.User;
+import com.swetonyancelmo.monify.domain.Category;
+import com.swetonyancelmo.monify.dto.response.CategoryResponseDto;
+import com.swetonyancelmo.monify.dto.request.CreateCategoryDto;
+import com.swetonyancelmo.monify.dto.request.UpdateCategoryDto;
+import com.swetonyancelmo.monify.domain.User;
 import com.swetonyancelmo.monify.exception.BusinessException;
 import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.CategoryRepository;

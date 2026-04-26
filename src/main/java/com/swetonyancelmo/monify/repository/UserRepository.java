@@ -1,6 +1,6 @@
 package com.swetonyancelmo.monify.repository;
 
-import com.swetonyancelmo.monify.domain.users.User;
+import com.swetonyancelmo.monify.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 

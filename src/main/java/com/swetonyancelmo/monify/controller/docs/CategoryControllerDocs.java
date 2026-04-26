@@ -1,10 +1,10 @@
 package com.swetonyancelmo.monify.controller.docs;
 
-import com.swetonyancelmo.monify.domain.categories.CategoryResponseDto;
-import com.swetonyancelmo.monify.domain.categories.CreateCategoryDto;
-import com.swetonyancelmo.monify.domain.categories.UpdateCategoryDto;
-import com.swetonyancelmo.monify.domain.dto.ErrorResponseDto;
-import com.swetonyancelmo.monify.domain.users.User;
+import com.swetonyancelmo.monify.dto.response.CategoryResponseDto;
+import com.swetonyancelmo.monify.dto.request.CreateCategoryDto;
+import com.swetonyancelmo.monify.dto.request.UpdateCategoryDto;
+import com.swetonyancelmo.monify.dto.response.ErrorResponseDto;
+import com.swetonyancelmo.monify.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

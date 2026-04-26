@@ -1,10 +1,10 @@
 package com.swetonyancelmo.monify.controller;
 
 import com.swetonyancelmo.monify.controller.docs.AuthControllerDocs;
-import com.swetonyancelmo.monify.domain.dto.LoginResponseDto;
-import com.swetonyancelmo.monify.domain.users.CreateUserDto;
-import com.swetonyancelmo.monify.domain.users.LoginRequestDto;
-import com.swetonyancelmo.monify.domain.users.UserResponseDto;
+import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
+import com.swetonyancelmo.monify.dto.request.CreateUserDto;
+import com.swetonyancelmo.monify.dto.response.LoginRequestDto;
+import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

@@ -1,8 +1,8 @@
 package com.swetonyancelmo.monify.controller.docs;
 
-import com.swetonyancelmo.monify.domain.dto.ErrorResponseDto;
-import com.swetonyancelmo.monify.domain.users.UpdateUserDto;
-import com.swetonyancelmo.monify.domain.users.UserResponseDto;
+import com.swetonyancelmo.monify.dto.response.ErrorResponseDto;
+import com.swetonyancelmo.monify.dto.request.UpdateUserDto;
+import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,11 +1,11 @@
 package com.swetonyancelmo.monify.service;
 
 import com.swetonyancelmo.monify.config.TokenConfig;
-import com.swetonyancelmo.monify.domain.dto.LoginResponseDto;
-import com.swetonyancelmo.monify.domain.users.CreateUserDto;
-import com.swetonyancelmo.monify.domain.users.LoginRequestDto;
-import com.swetonyancelmo.monify.domain.users.User;
-import com.swetonyancelmo.monify.domain.users.UserResponseDto;
+import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
+import com.swetonyancelmo.monify.dto.request.CreateUserDto;
+import com.swetonyancelmo.monify.dto.response.LoginRequestDto;
+import com.swetonyancelmo.monify.domain.User;
+import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.exception.EmailAlreadyExistsException;
 import com.swetonyancelmo.monify.repository.UserRepository;
 import jakarta.validation.ConstraintViolationException;
@@ -17,8 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
 
 @Service
 public class AuthService {

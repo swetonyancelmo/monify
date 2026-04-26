@@ -1,4 +1,4 @@
-package com.swetonyancelmo.monify.domain.users;
+package com.swetonyancelmo.monify.dto.request;
 
 import jakarta.validation.constraints.Size;
 

@@ -1,6 +1,6 @@
 package com.swetonyancelmo.monify.exception;
 
-import com.swetonyancelmo.monify.domain.dto.ErrorResponseDto;
+import com.swetonyancelmo.monify.dto.response.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

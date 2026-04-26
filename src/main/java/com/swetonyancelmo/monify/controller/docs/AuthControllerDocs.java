@@ -1,10 +1,10 @@
 package com.swetonyancelmo.monify.controller.docs;
 
-import com.swetonyancelmo.monify.domain.dto.ErrorResponseDto;
-import com.swetonyancelmo.monify.domain.dto.LoginResponseDto;
-import com.swetonyancelmo.monify.domain.users.CreateUserDto;
-import com.swetonyancelmo.monify.domain.users.LoginRequestDto;
-import com.swetonyancelmo.monify.domain.users.UserResponseDto;
+import com.swetonyancelmo.monify.dto.response.ErrorResponseDto;
+import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
+import com.swetonyancelmo.monify.dto.request.CreateUserDto;
+import com.swetonyancelmo.monify.dto.response.LoginRequestDto;
+import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
