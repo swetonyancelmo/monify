@@ -1,8 +1,8 @@
 package com.swetonyancelmo.monify.controller;
 
 import com.swetonyancelmo.monify.controller.docs.UserControllerDocs;
-import com.swetonyancelmo.monify.domain.users.UpdateUserDto;
-import com.swetonyancelmo.monify.domain.users.UserResponseDto;
+import com.swetonyancelmo.monify.dto.request.UpdateUserDto;
+import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

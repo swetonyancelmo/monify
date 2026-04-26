@@ -1,4 +1,4 @@
-package com.swetonyancelmo.monify.domain.users;
+package com.swetonyancelmo.monify.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

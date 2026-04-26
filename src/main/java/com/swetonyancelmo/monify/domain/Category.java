@@ -1,7 +1,6 @@
-package com.swetonyancelmo.monify.domain.categories;
+package com.swetonyancelmo.monify.domain;
 
-import com.swetonyancelmo.monify.domain.categories.enums.CategoryType;
-import com.swetonyancelmo.monify.domain.users.User;
+import com.swetonyancelmo.monify.domain.enums.CategoryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.swetonyancelmo.monify.domain.dto;
+package com.swetonyancelmo.monify.dto.response;
 
 public record ErrorResponseDto(
         String message

@@ -1,6 +1,6 @@
-package com.swetonyancelmo.monify.domain.categories;
+package com.swetonyancelmo.monify.dto.response;
 
-import com.swetonyancelmo.monify.domain.categories.enums.CategoryType;
+import com.swetonyancelmo.monify.domain.enums.CategoryType;
 
 import java.util.UUID;
 

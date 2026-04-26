@@ -1,10 +1,15 @@
-package com.swetonyancelmo.monify.domain.users;
+package com.swetonyancelmo.monify.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record LoginRequestDto (
+public record CreateUserDto(
+
+        @NotBlank(message = "O nome é obrigatório")
+        @Size(max = 255)
+        String name,
+
         @NotBlank(message = "O email é obrigatório")
         @Email(message = "O email deve ser válido")
         String email,
