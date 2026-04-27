@@ -67,6 +67,9 @@ public class AccountService {
                 .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada ou não existente com ID: "+ id));
 
         if (dto.name() != null && !dto.name().isEmpty()) {
+            if (!account.getName().equals(dto.name()) && accountRepository.existsByNameAndUserId(dto.name(), userId)) {
+                throw new BusinessException("Você já possui uma conta com o nome '" + dto.name() + "'");
+            }
             account.setName(dto.name());
         }
 
