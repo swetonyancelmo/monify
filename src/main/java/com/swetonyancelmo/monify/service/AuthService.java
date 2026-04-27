@@ -3,7 +3,7 @@ package com.swetonyancelmo.monify.service;
 import com.swetonyancelmo.monify.config.TokenConfig;
 import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
 import com.swetonyancelmo.monify.dto.request.CreateUserDto;
-import com.swetonyancelmo.monify.dto.response.LoginRequestDto;
+import com.swetonyancelmo.monify.dto.request.LoginRequestDto;
 import com.swetonyancelmo.monify.domain.User;
 import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.exception.EmailAlreadyExistsException;

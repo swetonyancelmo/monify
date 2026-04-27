@@ -5,7 +5,6 @@ import com.swetonyancelmo.monify.dto.response.CategoryResponseDto;
 import com.swetonyancelmo.monify.dto.request.CreateCategoryDto;
 import com.swetonyancelmo.monify.dto.request.UpdateCategoryDto;
 import com.swetonyancelmo.monify.config.JWTUserData;
-import com.swetonyancelmo.monify.domain.User;
 import com.swetonyancelmo.monify.service.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -15,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,8 +54,9 @@ public class CategoryController implements CategoryControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id, @AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(categoryService.updateCategory(data, id, user.getId()));
+    public ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id, Authentication authentication) {
+        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
+        return ResponseEntity.ok(categoryService.updateCategory(data, id, userData.userId()));
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -65,8 +64,9 @@ public class CategoryController implements CategoryControllerDocs {
             value = "/{uuid}"
     )
     @Override
-    public ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid, @AuthenticationPrincipal User user) {
-        categoryService.deleteCategory(uuid, user.getId());
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid, Authentication authentication) {
+        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
+        categoryService.deleteCategory(uuid, userData.userId());
         return ResponseEntity.noContent().build();
     }
 

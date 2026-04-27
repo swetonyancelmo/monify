@@ -3,7 +3,7 @@ package com.swetonyancelmo.monify.controller;
 import com.swetonyancelmo.monify.controller.docs.AuthControllerDocs;
 import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
 import com.swetonyancelmo.monify.dto.request.CreateUserDto;
-import com.swetonyancelmo.monify.dto.response.LoginRequestDto;
+import com.swetonyancelmo.monify.dto.request.LoginRequestDto;
 import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
