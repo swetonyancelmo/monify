@@ -1,4 +1,4 @@
-package com.swetonyancelmo.monify.dto.response;
+package com.swetonyancelmo.monify.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

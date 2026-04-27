@@ -1,11 +1,11 @@
 package com.swetonyancelmo.monify.controller;
 
-import com.swetonyancelmo.monify.controller.docs.CategoryControllerDocs;
-import com.swetonyancelmo.monify.dto.response.CategoryResponseDto;
-import com.swetonyancelmo.monify.dto.request.CreateCategoryDto;
-import com.swetonyancelmo.monify.dto.request.UpdateCategoryDto;
 import com.swetonyancelmo.monify.config.JWTUserData;
-import com.swetonyancelmo.monify.service.CategoryService;
+import com.swetonyancelmo.monify.controller.docs.AccountControllerDocs;
+import com.swetonyancelmo.monify.dto.request.CreateAccountDto;
+import com.swetonyancelmo.monify.dto.request.UpdateAccountDto;
+import com.swetonyancelmo.monify.dto.response.AccountResponseDto;
+import com.swetonyancelmo.monify.service.AccountService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,20 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/category/v1")
-@Tag(name = "Category", description = "Category Endpoints")
-public class CategoryController implements CategoryControllerDocs {
+@RequestMapping("/api/account/v1")
+@Tag(name = "Account", description = "Account Endpoints")
+public class AccountController implements AccountControllerDocs {
 
     @Autowired
-    private CategoryService categoryService;
+    private AccountService accountService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<List<CategoryResponseDto>> getAllCategories() {
-        return ResponseEntity.ok(categoryService.findAllCategories());
+    public ResponseEntity<List<AccountResponseDto>> getAllAccounts() {
+        return ResponseEntity.ok(accountService.findAllAccounts());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -42,9 +42,9 @@ public class CategoryController implements CategoryControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CreateCategoryDto data, Authentication authentication) {
+    public ResponseEntity<AccountResponseDto> createAccount(@Valid @RequestBody CreateAccountDto data, Authentication authentication) {
         JWTUserData userData = (JWTUserData) authentication.getPrincipal();
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(data, userData.email()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(data, userData.email()));
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -54,19 +54,21 @@ public class CategoryController implements CategoryControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id, Authentication authentication) {
+    public ResponseEntity<AccountResponseDto> updateAccount(@Valid @RequestBody UpdateAccountDto data,
+                                                            @PathVariable UUID id,
+                                                            Authentication authentication) {
         JWTUserData userData = (JWTUserData) authentication.getPrincipal();
-        return ResponseEntity.ok(categoryService.updateCategory(data, id, userData.userId()));
+        return ResponseEntity.ok(accountService.updateAccount(data, id, userData.userId()));
     }
 
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping(
-            value = "/{uuid}"
+            value = "/{id}"
     )
     @Override
-    public ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid, Authentication authentication) {
+    public ResponseEntity<AccountResponseDto> deleteAccount(@PathVariable UUID id, Authentication authentication) {
         JWTUserData userData = (JWTUserData) authentication.getPrincipal();
-        categoryService.deleteCategory(uuid, userData.userId());
+        accountService.deleteAccount(id, userData.userId());
         return ResponseEntity.noContent().build();
     }
 

@@ -3,7 +3,7 @@ package com.swetonyancelmo.monify.controller.docs;
 import com.swetonyancelmo.monify.dto.response.ErrorResponseDto;
 import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
 import com.swetonyancelmo.monify.dto.request.CreateUserDto;
-import com.swetonyancelmo.monify.dto.response.LoginRequestDto;
+import com.swetonyancelmo.monify.dto.request.LoginRequestDto;
 import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
