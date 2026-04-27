@@ -1,5 +1,6 @@
 package com.swetonyancelmo.monify.service;
 
+import com.swetonyancelmo.monify.config.JWTUserData;
 import com.swetonyancelmo.monify.domain.Account;
 import com.swetonyancelmo.monify.domain.User;
 import com.swetonyancelmo.monify.dto.request.CreateAccountDto;
@@ -10,6 +11,8 @@ import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.AccountRepository;
 import com.swetonyancelmo.monify.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +28,11 @@ public class AccountService {
 
     @Transactional(readOnly = true)
     public List<AccountResponseDto> findAllAccounts() {
-        return accountRepository.findAll().stream()
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        JWTUserData jwtUser = (JWTUserData) auth.getPrincipal();
+        User user = userRepository.findById(jwtUser.userId())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return accountRepository.findByUserId(user.getId()).stream()
                 .map(a -> new AccountResponseDto(a.getId(), a.getName(), a.getBalance(), a.getUser().getId()))
                 .collect(Collectors.toList());
     }
