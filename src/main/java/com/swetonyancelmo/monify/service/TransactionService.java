@@ -72,11 +72,21 @@ public class TransactionService {
      */
     @Transactional
     public TransactionResponseDto createTransaction(CreateTransactionDto dto, UUID categoryId, UUID accountId) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
 
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada"));
+
+        if (!category.getUser().getId().equals(userData.userId())) {
+            throw new BusinessException("Categoria não pertence ao usuário autenticado");
+        }
+
+        if (!account.getUser().getId().equals(userData.userId())) {
+            throw new BusinessException("Conta não pertence ao usuário autenticado");
+        }
 
         if (!category.getUser().getId().equals(account.getUser().getId())) {
             throw new BusinessException("Categoria não pertence ao usuário da conta");
@@ -154,6 +164,7 @@ public class TransactionService {
     public TransactionResponseDto updateTransaction(UpdateTransactionDto dto, UUID transactionId, UUID accountId, UUID categoryId) {
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+
         Transaction transaction = transactionRepository.findById(transactionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Transação não encontrada"));
 
@@ -166,6 +177,14 @@ public class TransactionService {
 
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada"));
+
+        if (!category.getUser().getId().equals(userData.userId())) {
+            throw new BusinessException("Categoria não pertence ao usuário autenticado");
+        }
+
+        if (!account.getUser().getId().equals(userData.userId())) {
+            throw new BusinessException("Conta não pertence ao usuário autenticado");
+        }
 
         if (!category.getUser().getId().equals(account.getUser().getId())) {
             throw new BusinessException("Categoria não pertence ao usuário da conta");
