@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +42,8 @@ public class AccountController implements AccountControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<AccountResponseDto> createAccount(@Valid @RequestBody CreateAccountDto data, Authentication authentication) {
-        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
+    public ResponseEntity<AccountResponseDto> createAccount(@Valid @RequestBody CreateAccountDto data) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(data, userData.email()));
     }
 
@@ -55,9 +55,8 @@ public class AccountController implements AccountControllerDocs {
     )
     @Override
     public ResponseEntity<AccountResponseDto> updateAccount(@Valid @RequestBody UpdateAccountDto data,
-                                                            @PathVariable UUID id,
-                                                            Authentication authentication) {
-        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
+                                                            @PathVariable UUID id) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(accountService.updateAccount(data, id, userData.userId()));
     }
 
@@ -66,8 +65,8 @@ public class AccountController implements AccountControllerDocs {
             value = "/{id}"
     )
     @Override
-    public ResponseEntity<AccountResponseDto> deleteAccount(@PathVariable UUID id, Authentication authentication) {
-        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
+    public ResponseEntity<Void> deleteAccount(@PathVariable UUID id) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         accountService.deleteAccount(id, userData.userId());
         return ResponseEntity.noContent().build();
     }

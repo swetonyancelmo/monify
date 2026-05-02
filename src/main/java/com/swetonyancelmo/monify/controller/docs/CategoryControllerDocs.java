@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,7 +48,7 @@ public interface CategoryControllerDocs {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CreateCategoryDto data, Authentication authentication);
+    ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CreateCategoryDto data);
 
     @Operation(summary = "Update a Category", description = "Update a Category")
     @ApiResponses(value = {
@@ -66,7 +65,7 @@ public interface CategoryControllerDocs {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id, Authentication authentication);
+    ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id);
 
     @Operation(summary = "Delete a Category", description = "Delete a Category")
     @ApiResponses(value = {
@@ -83,5 +82,5 @@ public interface CategoryControllerDocs {
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid, Authentication authentication);
+    ResponseEntity<Void> deleteCategory(@PathVariable UUID id);
 }
