@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +55,7 @@ public interface AccountControllerDocs {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<AccountResponseDto> createAccount(@Valid @RequestBody CreateAccountDto data, Authentication authentication);
+    ResponseEntity<AccountResponseDto> createAccount(@Valid @RequestBody CreateAccountDto data);
 
     @Operation(summary = "Update a Account", description = "Update a Account")
     @ApiResponses(value = {
@@ -79,8 +78,7 @@ public interface AccountControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     ResponseEntity<AccountResponseDto> updateAccount(@Valid @RequestBody UpdateAccountDto data,
-                                                     @PathVariable UUID id,
-                                                     Authentication authentication);
+                                                     @PathVariable UUID id);
 
     @Operation(summary = "Delete a Account", description = "Delete a Account")
     @ApiResponses(value = {
@@ -97,5 +95,5 @@ public interface AccountControllerDocs {
     @DeleteMapping(
             value = "/{id}"
     )
-    ResponseEntity<AccountResponseDto> deleteAccount(@PathVariable UUID id, Authentication authentication);
+    ResponseEntity<Void> deleteAccount(@PathVariable UUID id);
 }

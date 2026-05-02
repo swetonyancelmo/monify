@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +42,8 @@ public class CategoryController implements CategoryControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CreateCategoryDto data, Authentication authentication) {
-        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
+    public ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CreateCategoryDto data) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(data, userData.email()));
     }
 
@@ -54,19 +54,19 @@ public class CategoryController implements CategoryControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id, Authentication authentication) {
-        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
+    public ResponseEntity<CategoryResponseDto> updateCategory(@Valid @RequestBody UpdateCategoryDto data, @PathVariable UUID id) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(categoryService.updateCategory(data, id, userData.userId()));
     }
 
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping(
-            value = "/{uuid}"
+            value = "/{id}"
     )
     @Override
-    public ResponseEntity<Void> deleteCategory(@PathVariable UUID uuid, Authentication authentication) {
-        JWTUserData userData = (JWTUserData) authentication.getPrincipal();
-        categoryService.deleteCategory(uuid, userData.userId());
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID id) {
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        categoryService.deleteCategory(id, userData.userId());
         return ResponseEntity.noContent().build();
     }
 
