@@ -11,6 +11,8 @@ import com.swetonyancelmo.monify.repository.CategoryRepository;
 import com.swetonyancelmo.monify.repository.UserRepository;
 import com.swetonyancelmo.monify.config.JWTUserData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +34,10 @@ public class CategoryService {
      * @return {@link List} de {@link CategoryResponseDto} com as categorias do usuário
      */
     @Transactional(readOnly = true)
-    public List<CategoryResponseDto> findAllCategories() {
+    public Page<CategoryResponseDto> findAllCategories(Pageable pageable) {
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return categoryRepository.findByUserId(userData.userId()).stream()
-                .map(c -> new CategoryResponseDto(c.getId(), c.getName(), c.getType(), c.getUser().getId()))
-                .collect(Collectors.toList());
+        return categoryRepository.findByUserId(userData.userId(), pageable)
+                .map(c -> new CategoryResponseDto(c.getId(), c.getName(), c.getType(), c.getUser().getId()));
     }
 
     /**
