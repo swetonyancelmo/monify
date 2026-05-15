@@ -7,14 +7,20 @@ import com.swetonyancelmo.monify.dto.response.TransactionResponseDto;
 import com.swetonyancelmo.monify.service.TransactionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,8 +36,14 @@ public class TransactionController implements TransactionControllerDocs {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Override
-    public ResponseEntity<List<TransactionResponseDto>> getAllTransactions() {
-        return ResponseEntity.ok(transactionService.findAllTransactions());
+    public ResponseEntity<Page<TransactionResponseDto>> getAllTransactions(
+            @RequestParam(value = "page", defaultValue = "0") @Min(0) Integer page,
+            @RequestParam(value = "size", defaultValue = "12") @Positive Integer size,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction
+    ) {
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "date"));
+        return ResponseEntity.ok(transactionService.findAllTransactions(pageable));
     }
 
     @PreAuthorize("isAuthenticated()")

@@ -11,6 +11,8 @@ import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.AccountRepository;
 import com.swetonyancelmo.monify.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +34,10 @@ public class AccountService {
      * @return {@link List} de {@link AccountResponseDto} com as contas do usuário
      */
     @Transactional(readOnly = true)
-    public List<AccountResponseDto> findAllAccounts() {
+    public Page<AccountResponseDto> findAllAccounts(Pageable pageable) {
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return accountRepository.findByUserId(userData.userId()).stream()
-                .map(a -> new AccountResponseDto(a.getId(), a.getName(), a.getBalance(), a.getUser().getId()))
-                .collect(Collectors.toList());
+        return accountRepository.findByUserId(userData.userId(), pageable)
+                .map(a -> new AccountResponseDto(a.getId(), a.getName(), a.getBalance(), a.getUser().getId()));
     }
 
     /**
