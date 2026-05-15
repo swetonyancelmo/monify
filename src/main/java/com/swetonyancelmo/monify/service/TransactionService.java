@@ -13,6 +13,8 @@ import com.swetonyancelmo.monify.repository.AccountRepository;
 import com.swetonyancelmo.monify.repository.CategoryRepository;
 import com.swetonyancelmo.monify.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +34,9 @@ public class TransactionService {
      * Retorna TODAS as transações do usuário autenticado
      **/
     @Transactional(readOnly = true)
-    public List<TransactionResponseDto> findAllTransactions() {
+    public Page<TransactionResponseDto> findAllTransactions(Pageable pageable) {
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return transactionRepository.findByAccount_User_Id(userData.userId()).stream()
+        return transactionRepository.findByAccount_User_Id(userData.userId(), pageable)
                 .map(t -> new TransactionResponseDto(
                         t.getId(),
                         t.getType(),
@@ -42,8 +44,7 @@ public class TransactionService {
                         t.getDescription(),
                         t.getDate(),
                         t.getAccount().getId(),
-                        t.getCategory().getId()))
-                .collect(Collectors.toList());
+                        t.getCategory().getId()));
     }
 
     /**
