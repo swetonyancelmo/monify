@@ -1,16 +1,16 @@
 package com.swetonyancelmo.monify.service;
 
+import com.swetonyancelmo.monify.config.JWTUserData;
 import com.swetonyancelmo.monify.domain.Category;
-import com.swetonyancelmo.monify.dto.response.CategoryResponseDto;
+import com.swetonyancelmo.monify.domain.User;
 import com.swetonyancelmo.monify.dto.request.CreateCategoryDto;
 import com.swetonyancelmo.monify.dto.request.UpdateCategoryDto;
-import com.swetonyancelmo.monify.domain.User;
+import com.swetonyancelmo.monify.dto.response.CategoryResponseDto;
 import com.swetonyancelmo.monify.exception.BusinessException;
 import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.CategoryRepository;
 import com.swetonyancelmo.monify.repository.UserRepository;
-import com.swetonyancelmo.monify.config.JWTUserData;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
 
-    @Autowired private CategoryRepository categoryRepository;
-    @Autowired private UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     /**
      * Retorna TODAS as categorias do usuário autenticado.

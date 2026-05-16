@@ -10,7 +10,7 @@ import com.swetonyancelmo.monify.exception.BusinessException;
 import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.AccountRepository;
 import com.swetonyancelmo.monify.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
 
-    @Autowired private AccountRepository accountRepository;
-    @Autowired private UserRepository userRepository;
+    private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
 
     /**
      * Retorna TODAS as contas do usuário autenticado.
