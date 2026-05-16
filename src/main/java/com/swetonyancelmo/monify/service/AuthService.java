@@ -1,15 +1,14 @@
 package com.swetonyancelmo.monify.service;
 
 import com.swetonyancelmo.monify.config.TokenConfig;
-import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
+import com.swetonyancelmo.monify.domain.User;
 import com.swetonyancelmo.monify.dto.request.CreateUserDto;
 import com.swetonyancelmo.monify.dto.request.LoginRequestDto;
-import com.swetonyancelmo.monify.domain.User;
+import com.swetonyancelmo.monify.dto.response.LoginResponseDto;
 import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.exception.EmailAlreadyExistsException;
 import com.swetonyancelmo.monify.repository.UserRepository;
-import jakarta.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,12 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    @Autowired private UserRepository userRepository;
-    @Autowired private PasswordEncoder passwordEncoder;
-    @Autowired private AuthenticationManager authenticationManager;
-    @Autowired private TokenConfig tokenConfig;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final TokenConfig tokenConfig;
 
     @Transactional
     public UserResponseDto create(CreateUserDto dto) {
