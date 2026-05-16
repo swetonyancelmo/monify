@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDto(messages));
     }
 
-    @ExceptionHandler(ConcurrentModificationException.class)
+    @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponseDto> handleConstraintViolationException (ConstraintViolationException ex){
         String messages = ex.getConstraintViolations().stream()
                 .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())

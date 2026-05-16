@@ -38,7 +38,7 @@ public class AuthService {
 
             return new UserResponseDto(userSaved.getId(), userSaved.getName(), userSaved.getEmail());
         } catch (DataIntegrityViolationException e) {
-            if (e.getCause() instanceof ConstraintViolationException) {
+            if (userRepository.existsByEmail(dto.email())) {
                 throw new EmailAlreadyExistsException("Email já cadastrado");
             }
             throw e;
