@@ -6,6 +6,7 @@ import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.exception.ResourceNotFoundException;
 import com.swetonyancelmo.monify.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public UserResponseDto findById(UUID id) {
@@ -35,7 +39,7 @@ public class UserService {
         }
 
         if (dto.password() != null && !dto.password().isEmpty()) {
-            user.setPassword(dto.password());
+            user.setPassword(passwordEncoder.encode(dto.password()));
         }
 
         User userUpdated = userRepository.save(user);
