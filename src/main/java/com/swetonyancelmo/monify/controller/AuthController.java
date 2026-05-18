@@ -8,7 +8,7 @@ import com.swetonyancelmo.monify.dto.response.UserResponseDto;
 import com.swetonyancelmo.monify.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth/v1")
 @Tag(name = "Auth", description = "Auth Endpoints")
+@RequiredArgsConstructor
 public class AuthController implements AuthControllerDocs {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     @PostMapping(
             value = "/register",

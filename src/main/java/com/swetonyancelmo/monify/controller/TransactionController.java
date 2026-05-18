@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +26,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/transaction/v1")
 @Tag(name = "Transaction", description = "Transaction Endpoints")
+@RequiredArgsConstructor
 public class TransactionController implements TransactionControllerDocs {
 
-    @Autowired
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(
