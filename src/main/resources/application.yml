@@ -16,3 +16,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:monify-dev-secret-change-in-production}
