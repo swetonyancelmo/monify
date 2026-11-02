@@ -1,8 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/monify_db
-    username: postgres
-    password: admin
+    # Valores padrão só para desenvolvimento local (batem com o docker-compose.yml).
+    # Em qualquer outro ambiente, defina as variáveis.
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/monify_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -19,4 +21,6 @@ spring:
 
 security:
   jwt:
-    secret: ${JWT_SECRET:monify-dev-secret-change-in-production}
+    # Obrigatório: sem valor padrão de propósito. Se a variável faltar, a aplicação
+    # não sobe (melhor que assinar tokens com uma chave pública). Veja o .env.example.
+    secret: ${JWT_SECRET}

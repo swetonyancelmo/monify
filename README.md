@@ -23,7 +23,9 @@ Monify é uma aplicação Spring Boot desenvolvida em Java para gerenciamento fi
 1. Certifique-se de ter o Docker e Docker Compose instalados.
 2. Execute `docker-compose up -d` para iniciar os serviços necessários (como o banco de dados).
 3. Certifique-se de ter o Java e Maven instalados.
-4. Execute `mvn spring-boot:run` para iniciar a aplicação.
-5. Alternativamente, se preferir usar apenas containers, configure o docker-compose para incluir a aplicação e use `docker-compose up`.
+4. Defina o segredo do JWT, que é **obrigatório** (sem ele a aplicação não sobe). Há um modelo em `.env.example`:
+   `export JWT_SECRET=$(openssl rand -base64 32)`
+5. Execute `mvn spring-boot:run` para iniciar a aplicação.
+6. Alternativamente, se preferir usar apenas containers, configure o docker-compose para incluir a aplicação e use `docker-compose up`.
 
 A aplicação roda na porta padrão do Spring Boot (8080) e inclui documentação Swagger acessível via `/swagger-ui.html`.
